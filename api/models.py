@@ -13,7 +13,7 @@ from django.contrib.auth.models import (
 # manager power dey ORM ba base model use korar
 class UserManager(BaseUserManager):
     # ei create_user call hbe jokhon kono user / superuser create kri
-    def create_user(self, email, password):
+    def create_user(self, email, password, account_type):
         if not email:
             raise ValueError("Please insert user Email")
 
@@ -21,7 +21,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
 
         # current model er under e user
-        user = self.model(email=email)
+        user = self.model(email=email, account_type=account_type)
 
         # encrypt password
         user.set_password(password)
@@ -44,6 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     # New field
+    # account_type e choice field na dileo hoto, cz data receive hbe rest_api theke
     account_type = models.CharField(
         max_length=10,
         blank=True,

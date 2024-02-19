@@ -23,8 +23,9 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         email = validated_data["email"]
         password = validated_data["password"]
+        account_type = validated_data["account_type"]
         # User Model er create_user fn
-        user = User.objects.create_user(email, password)
+        user = User.objects.create_user(email, password, account_type)
         return user
 
 
@@ -42,5 +43,3 @@ class CarsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cars
         fields = "__all__"
-
-
