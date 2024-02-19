@@ -46,6 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # New field
     account_type = models.CharField(
         max_length=10,
+        blank=True,
         choices=(
             ("Owner", "Owner"),
             ("Client", "Client"),
