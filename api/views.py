@@ -4,6 +4,9 @@ from rest_framework import viewsets
 from .models import User, Categories, Cars
 from .serializers import UserSerializer, CarsSerializer, CategoriesSerializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+
 
 # Create your views here.
 
@@ -21,6 +24,14 @@ class CategoriesViewSet(viewsets.ModelViewSet):
 class CarsViewSet(viewsets.ModelViewSet):
     queryset = Cars.objects.all()
     serializer_class = CarsSerializer
+
+    # create new car entry
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 ############### viewSet for Order ############

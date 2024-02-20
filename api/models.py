@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
     BaseUserManager,
 )
+import uuid
 
 # Create your models here.
 # custom User model process
@@ -89,6 +90,14 @@ class Cars(models.Model):
     booked_time = models.IntegerField()
     expire_time = models.IntegerField()
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def get_unique_filename(instance, filename):
+        # Generate a unique filename using UUID
+        ext = filename.split(".")[-1]
+        unique_id = uuid.uuid4().hex
+        return f"car_photos/{unique_id}.{ext}"
+
+    car_photo = models.ImageField(upload_to=get_unique_filename, null=True, blank=True)
 
     def __str__(self):
         return self.car_name
