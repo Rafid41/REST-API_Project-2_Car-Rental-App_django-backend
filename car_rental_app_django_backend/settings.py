@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     "django_cleanup.apps.CleanupConfig",
 ]
 
+# expand session time to 1 hour
+SESSION_COOKIE_AGE = 3600
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",  # added at the top
     "django.middleware.security.SecurityMiddleware",
