@@ -1,7 +1,7 @@
 # api\serializers.py
 # serialize means convert model to json
 from rest_framework import serializers
-from .models import User, Categories, Cars
+from .models import User, Categories, Cars, CarBookingDate
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,4 +42,11 @@ class CategoriesSerializer(serializers.ModelSerializer):
 class CarsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cars
+        fields = "__all__"
+
+
+################### Serialize CarBookingDates ##################
+class CarBookingDateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarBookingDate
         fields = "__all__"

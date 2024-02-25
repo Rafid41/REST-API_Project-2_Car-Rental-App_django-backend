@@ -1,5 +1,6 @@
 # api\models.py
 from django.db import models
+import datetime
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
@@ -86,9 +87,10 @@ class Cars(models.Model):
         related_name="booker_account",
     )
     car_category = models.ForeignKey(Categories, on_delete=models.CASCADE)
-    # time will be handled by react, it will only store the milliseconds
-    booked_time = models.IntegerField(blank=True, null=True)
-    expire_time = models.IntegerField(blank=True, null=True)
+    # # time will be handled by react, it will only store the milliseconds
+    # # booked_time = models.IntegerField(blank=True, null=True)
+    # # expire_time = models.IntegerField(blank=True, null=True)
+    # bookedDateList = models.ManyToManyField(CarBookingDate)
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
 
     def get_unique_filename(instance, filename):
@@ -101,3 +103,19 @@ class Cars(models.Model):
 
     def __str__(self):
         return self.car_name
+
+
+class CarBookingDate(models.Model):
+    car_id = models.ForeignKey(Cars, on_delete=models.CASCADE, blank=True, null=True)
+    booking_date = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return (
+            self.car_id.car_name
+            + " | "
+            + str(
+                datetime.datetime.utcfromtimestamp(self.booking_date / 1000).strftime(
+                    "%d-%m-%Y"
+                )
+            )
+        )

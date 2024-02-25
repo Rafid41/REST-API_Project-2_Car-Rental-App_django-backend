@@ -1,8 +1,13 @@
 # api\views.py
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import User, Categories, Cars
-from .serializers import UserSerializer, CarsSerializer, CategoriesSerializer
+from .models import User, Categories, Cars, CarBookingDate
+from .serializers import (
+    UserSerializer,
+    CarsSerializer,
+    CategoriesSerializer,
+    CarBookingDateSerializer,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -32,6 +37,11 @@ class CarsViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CarBookingDateViewSet(viewsets.ModelViewSet):
+    queryset = CarBookingDate.objects.all()
+    serializer_class = CarBookingDateSerializer
 
 
 ############### viewSet for Order ############
