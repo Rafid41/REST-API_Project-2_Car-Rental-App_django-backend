@@ -54,7 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
             ("Client", "Client"),
         ),
     )
-    # booked_car = models.CharField(max_length=100, blank=True, null=True)
 
     # manager er name
     objects = UserManager()
