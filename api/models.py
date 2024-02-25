@@ -79,15 +79,9 @@ class Cars(models.Model):
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="owner_account"
     )
-    booker = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="booker_account",
-    )
+
     car_category = models.ForeignKey(Categories, on_delete=models.CASCADE)
-    # # time will be handled by react, it will only store the milliseconds
+    # time will be handled by react, it will only store the milliseconds
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
 
     def get_unique_filename(instance, filename):
@@ -105,6 +99,13 @@ class Cars(models.Model):
 class CarBookingDate(models.Model):
     car_id = models.ForeignKey(Cars, on_delete=models.CASCADE, blank=True, null=True)
     booking_date = models.IntegerField(blank=True, null=True)
+    booker_id = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="booker_account",
+    )
 
     def __str__(self):
         return (
