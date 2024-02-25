@@ -88,9 +88,6 @@ class Cars(models.Model):
     )
     car_category = models.ForeignKey(Categories, on_delete=models.CASCADE)
     # # time will be handled by react, it will only store the milliseconds
-    # # booked_time = models.IntegerField(blank=True, null=True)
-    # # expire_time = models.IntegerField(blank=True, null=True)
-    # bookedDateList = models.ManyToManyField(CarBookingDate)
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
 
     def get_unique_filename(instance, filename):
