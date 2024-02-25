@@ -1,6 +1,5 @@
 # api\models.py
 from django.db import models
-import datetime
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
@@ -98,7 +97,7 @@ class Cars(models.Model):
 
 class CarBookingDate(models.Model):
     car_id = models.ForeignKey(Cars, on_delete=models.CASCADE, blank=True, null=True)
-    booking_date = models.IntegerField(blank=True, null=True)
+    booking_date = models.CharField(blank=True, null=True, max_length=20)
     booker_id = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -108,12 +107,4 @@ class CarBookingDate(models.Model):
     )
 
     def __str__(self):
-        return (
-            self.car_id.car_name
-            + " | "
-            + str(
-                datetime.datetime.utcfromtimestamp(self.booking_date / 1000).strftime(
-                    "%d-%m-%Y"
-                )
-            )
-        )
+        return self.car_id.car_name + " | " + self.booking_date
